@@ -16,6 +16,7 @@
             padding: 10px;
             background-color: white;
             border: 1px solid black;
+            font-size: 0px;
         }
 
         #jatekterulet img:hover {
@@ -38,8 +39,104 @@
             float: right;
         }
     </style>
+    <script>
+        let palya = [];
+        let darab;
+        let osszrepa = 9*12-21;
+        function ujra() {
+            darab = 0;
+            let html = "";
+
+            //tele repaval
+            for (let y = 0; y < 9; y++) {
+                palya[y] = [];
+                for (let x = 0; x < 12; x++) {
+                    palya[y][x] = "repa.png";
+                }
+            }
+
+            //random nyuszi
+            let randy = Math.floor(Math.random()*9);
+            let randx = Math.floor(Math.random()*12);
+            palya[randy][randx] = "nyuszi.png";
+
+            //random kutyak
+            let count = 0;
+            randy = Math.floor(Math.random()*9);
+            randx = Math.floor(Math.random()*12);
+            while (count != 20) {
+                if (palya[randy][randx] != "nyuszi.png" && palya[randy][randx] != "kutya.png") {
+                    palya[randy][randx] = "kutya.png";
+                    count++;
+                } 
+                randy = Math.floor(Math.random()*9);
+                randx = Math.floor(Math.random()*12);
+            }
+            console.log(palya);
+
+            //kiir
+            for (let y = 0; y < 9; y++) {
+                for (let x = 0; x < 12; x++) {
+                    html += "<img src='" + palya[y][x] + "' id='y" + y + "x" + x +"' onclick='katt(" + y + ", " + x + ")'>";
+                }
+                html += "<br>";
+            }
+            document.getElementById("jatekterulet").innerHTML = html;
+            document.getElementById("darab").innerHTML = darab + " darab";
+        }
+
+        function katt(y, x) {
+            let nyusziy;
+            let nyuszix;
+            if (palya[y][x] == "repa.png") {
+                if (y > 0 && palya[y-1][x] == "nyuszi.png") {
+                    nyusziy = y-1;
+                    nyuszix = x;
+                    document.getElementById("y" + y + "x" + x).src = "nyuszi.png";
+                    document.getElementById("y" + nyusziy + "x" + nyuszix).src = "ures.png";
+                    palya[nyusziy][nyuszix] = "ures.png";
+                    palya[y][x] = "nyuszi.png";
+                    darab++;
+                } else if (y < 8 && palya[y+1][x] == "nyuszi.png") {
+                    nyusziy = y+1;
+                    nyuszix = x;
+                    document.getElementById("y" + y + "x" + x).src = "nyuszi.png";
+                    document.getElementById("y" + nyusziy + "x" + nyuszix).src = "ures.png";
+                    palya[nyusziy][nyuszix] = "ures.png";
+                    palya[y][x] = "nyuszi.png";
+                    darab++;
+                } else if (x > 0 && palya[y][x-1] == "nyuszi.png") {
+                    nyusziy = y;
+                    nyuszix = x-1;
+                    document.getElementById("y" + y + "x" + x).src = "nyuszi.png";
+                    document.getElementById("y" + nyusziy + "x" + nyuszix).src = "ures.png";
+                    palya[nyusziy][nyuszix] = "ures.png";
+                    palya[y][x] = "nyuszi.png";
+                    darab++;
+                } else if (x < 11 && palya[y][x+1] == "nyuszi.png") {
+                    nyusziy = y;
+                    nyuszix = x+1;
+                    document.getElementById("y" + y + "x" + x).src = "nyuszi.png";
+                    document.getElementById("y" + nyusziy + "x" + nyuszix).src = "ures.png";
+                    palya[nyusziy][nyuszix] = "ures.png";
+                    palya[y][x] = "nyuszi.png";
+                    darab++;
+                }
+            } else if (palya[y][x] == "ures.png") {
+                palya[y][x] = "repa.png";
+                document.getElementById("y" + y + "x" + x).src = "repa.png";
+                darab--;
+            }
+            
+            document.getElementById("darab").innerHTML = darab + " darab";
+
+            if (osszrepa == darab) {
+                alert("Győztél!");
+            }
+        }
+    </script>
 </head>
-<body onload="">
+<body onload="ujra();">
     <div id="container">
         <div id="jatekterulet"></div>
         <div id="hud">
