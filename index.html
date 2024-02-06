@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyuszi</title>
+    <style>
+        body { background-color: aquamarine;}
+        #container {
+            margin: auto;
+            width: 864px;
+        }
+        #jatekterulet {
+            width: 864px; height: 648px;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid black;
+        }
+
+        #jatekterulet img:hover {
+            background-color: #99ccff;
+        }
+
+        #hud {
+            margin: 10px;
+            width: 864px;
+            font-size: 20pt;
+        }
+
+        #hud img {
+            border: 1px solid black;
+            background-color: white;
+            vertical-align: middle;
+        }
+
+        #ujra {
+            float: right;
+        }
+    </style>
+</head>
+<body onload="">
+    <div id="container">
+        <div id="jatekterulet"></div>
+        <div id="hud">
+            <img src="repa.png">
+            <span id="darab">0 darab</span>
+            <img src="ujra.png" id="ujra" onclick="ujra();">
+        </div>
+    </div>
+</body>
+</html>
